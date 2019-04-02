@@ -1,5 +1,8 @@
 package gov.cancer.pageobject.crosscutting;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -13,7 +16,7 @@ import gov.cancer.pageobject.PageObjectBase;
 public class FooterPage extends PageObjectBase {
 
   /*************** Page WebElements **********************/
-  @FindBy(how = How.ID, using = "nvcgSlFooter")
+  @FindBy(how = How.CSS, using = "#nvcgSlFooter")
   WebElement pageFooter;
   @FindBy(how = How.CSS, using = "div[class='site-footer__header']>h1")
   WebElement pageFooterHeader;
@@ -97,6 +100,8 @@ public class FooterPage extends PageObjectBase {
   @FindBy(how = How.CSS, using = "a.back-to-top")
   WebElement backToTop;
 
+  final public String Footer_header = "National Cancer Institute";
+
   /********* FOOTER Page Methods ***********************/
 
   /* Returns the Webelement Back to Top */
@@ -126,12 +131,21 @@ public class FooterPage extends PageObjectBase {
 
   /* Returns true if header of Footer is displayed */
   public boolean isFooterHeaderVisible() {
-    return pageFooterHeader.isDisplayed();
+    WebElement footerheader = getBrowser().findElement(By.cssSelector("div[class='site-footer__header']>h1"));
+    return footerheader.isDisplayed();
   }
 
   /* Returns the Webelement header of the Footer */
-  public WebElement getFooterHeader() {
-    return pageFooterHeader;
+  public Boolean getFooterHeader() {
+    Boolean header_match = false;
+    WebElement footerheader = getBrowser().findElement(By.cssSelector("div[class='site-footer__header']>h1"));
+    header_match = footerheader.getText().contains(Footer_header);
+    return header_match;
+  }
+
+  /* Returns the Webelement header of the Footer */
+  public void getFooterHeaderEsp() {
+    /* implement this for Spanish header of Footer */
   }
 
   /* Returns true if FOLLOW US is displayed on the Footer */
