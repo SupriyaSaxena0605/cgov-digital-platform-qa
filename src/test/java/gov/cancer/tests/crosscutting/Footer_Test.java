@@ -83,14 +83,7 @@ public class Footer_Test extends TestObjectBase {
 
       String Currentlanguage = page.getFooterLanguage().trim();
 
-      switch (Expectedlanguage) {
-      case "English":
-        Assert.assertTrue(Currentlanguage.matches(Expectedlanguage), "English Footer is displayed in English.");
-        break;
-      case "Spanish":
-        Assert.assertTrue(Currentlanguage.matches(Expectedlanguage), "Spanish Footer is displayed in Spanish.");
-        break;
-      }
+      Assert.assertTrue(Currentlanguage.matches(Expectedlanguage), "Footer is displayed in correct language.");
 
     });
 
