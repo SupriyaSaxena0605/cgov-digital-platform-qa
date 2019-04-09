@@ -2,7 +2,6 @@ package gov.cancer.pageobject.crosscutting;
 
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -25,7 +24,6 @@ public class FooterPage extends PageObjectBase {
   /********* FOOTER SELECTORS ***********************/
 
   final public String footerheader = "div[class='site-footer__header']>h1";
-  final public String backtoTop = "a.back-to-top";
 
   /********* FOOTER Page Methods ***********************/
 
@@ -39,25 +37,6 @@ public class FooterPage extends PageObjectBase {
     super(path);
   }
 
-  /* Returns true if Back to Top is displayed */
-  public boolean isbackToTopVisible() {
-    return ElementHelper.findElement(pageFooter, backtoTop).isDisplayed();
-  }
-
-  /* Returns true if Back to Top label is correct */
-  public boolean getbackToTop() {
-    Boolean header_match = false;
-    header_match = ElementHelper.findElement(pageFooter, backtoTop).getText().contains("TOP");
-    return header_match;
-  }
-
-  /* Returns true if Spanish Back to Top label is correct */
-  public boolean getbackToTopEsp() {
-    Boolean header_matchesp = false;
-    header_matchesp = ElementHelper.findElement(pageFooter, backtoTop).getText().contains("SUBIR");
-    return header_matchesp;
-  }
-
   /* Returns true if Footer is displayed on the page */
   public boolean isFooterVisible() {
     return pageFooter.isDisplayed();
@@ -68,18 +47,23 @@ public class FooterPage extends PageObjectBase {
     return ElementHelper.findElement(pageFooter, footerheader).isDisplayed();
   }
 
-  /* Returns true if header of the Footer is correct */
-  public boolean getFooterHeader() {
-    Boolean header_match = false;
-    header_match = ElementHelper.findElement(pageFooter, footerheader).getText().contains(Footer_header);
-    return header_match;
+  /* Returns the header of the Footer */
+  public String getFooterHeader() {
+    String header = ElementHelper.findElement(pageFooter, footerheader).getText();
+    return header;
   }
 
-  /* Returns true if Spanish header of the Footer is correct */
-  public boolean getFooterHeaderEsp() {
-    Boolean header_matchesp = false;
-    header_matchesp = ElementHelper.findElement(pageFooter, footerheader).getText().contains(Footer_headerEsp);
-    return header_matchesp;
+  /* Returns the language of the Footer */
+  public String getFooterLanguage() {
+    String language = null;
+    String header = ElementHelper.findElement(pageFooter, footerheader).getText();
+
+    if (header.startsWith(Footer_header)) {
+      language = "English";
+    } else if (header.startsWith(Footer_headerEsp)) {
+      language = "Spanish";
+    }
+    return language;
   }
 
   /* Returns text of Footer */

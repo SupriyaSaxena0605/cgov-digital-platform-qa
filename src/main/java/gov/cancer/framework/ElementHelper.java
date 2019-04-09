@@ -7,8 +7,20 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * ElementHelper class contains methods which work on web elements on the page.
+ * 
+ */
 public class ElementHelper {
 
+  /**
+   * This method returns the exact element on the page.
+   * 
+   * @param parent
+   *          - page WebDriver or WebElement.
+   * @param selector
+   *          - CSS selector string.
+   */
   public static WebElement findElement(SearchContext parent, String selector) {
 
     List<WebElement> findList = parent.findElements(By.cssSelector(selector));
@@ -23,6 +35,15 @@ public class ElementHelper {
 
   }
 
+  /**
+   * This method returns the list of elements on the page defined by a certain
+   * selector.
+   * 
+   * @param parent
+   *          - page WebDriver or WebElement.
+   * @param selector
+   *          - CSS selector string.
+   */
   public static List<WebElement> findElements(SearchContext parent, String selector) {
 
     List<WebElement> findList = parent.findElements(By.cssSelector(selector));

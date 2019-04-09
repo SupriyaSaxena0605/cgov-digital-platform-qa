@@ -16,14 +16,19 @@ import gov.cancer.tests.TestRunner;
  */
 public class Footer_Test extends TestObjectBase {
 
+  final public String Footer_header = "National Cancer Institute";
+  final public String Footer_headerEsp = "Instituto Nacional del Cáncer";
+
   /**
    * This method is checking if the Footer exists on the pages
    * 
    * @param path
    *          Path of the page to check.
+   * @param language
+   *          Language of the page to check.
    */
   @Test(dataProvider = "getPageFooterPaths")
-  public void footerIsVisible(String path) {
+  public void footerIsVisible(String path, String language) {
 
     TestRunner.run(FooterPage.class, path, (FooterPage page) -> {
 
@@ -39,34 +44,56 @@ public class Footer_Test extends TestObjectBase {
    * 
    * @param path
    *          Path of the page to check.
+   * @param language
+   *          Language of the page to check.
    */
   @Test(dataProvider = "getPageFooterPaths")
-  public void verifyFooterHeader(String path) {
+  public void verifyFooterHeader(String path, String language) {
 
     TestRunner.run(FooterPage.class, path, (FooterPage page) -> {
 
       Assert.assertTrue(page.isFooterHeaderVisible(), "Footer Header is visible.");
-      Assert.assertTrue(page.getFooterHeader(), "Footer Header is displayed correct.");
+
+      Boolean header_match = false;
+      if (language == "English") {
+        header_match = page.getFooterHeader().startsWith(Footer_header);
+        Assert.assertTrue(header_match, "Footer Header is displayed in English.");
+      } else if (language == "Spanish") {
+        header_match = page.getFooterHeader().startsWith(Footer_headerEsp);
+        Assert.assertTrue(header_match, "Footer Header is displayed in Spanish.");
+      }
 
     });
 
   }
 
   /**
-   * This method is checking if Back to Top icon is displayed on the footer on
-   * all pages and have correct link and label
+   * This method is checking if the English footer is displayed on the English
+   * page and Spanish footer is displayed on the Spanish page
    * 
    * @param path
    *          Path of the page to check.
+   * @param Expectedlanguage
+   *          Language of the page to check.
    */
   @Test(dataProvider = "getPageFooterPaths")
-  public void verifyBackToTop(String path) {
+  public void verifyFooterHeaderLanguage(String path, String Expectedlanguage) {
 
     TestRunner.run(FooterPage.class, path, (FooterPage page) -> {
 
-      Assert.assertTrue(page.isbackToTopVisible(), "Back to top link is visible.");
-      Assert.assertTrue(page.getbackToTop(), "Back to Top button is displayed correct.");
+      String Currentlanguage = page.getFooterLanguage().trim();
+
+      switch (Expectedlanguage) {
+      case "English":
+        Assert.assertTrue(Currentlanguage.matches(Expectedlanguage), "English Footer is displayed in English.");
+        break;
+      case "Spanish":
+        Assert.assertTrue(Currentlanguage.matches(Expectedlanguage), "Spanish Footer is displayed in Spanish.");
+        break;
+      }
+
     });
+
   }
 
   /**
@@ -77,7 +104,7 @@ public class Footer_Test extends TestObjectBase {
    *          Path of the page to check.
    */
   @Test(dataProvider = "getPageFooterPaths")
-  public void verifyFooterTextlengthCorrect(String path) {
+  public void verifyFooterTextlengthCorrect(String path, String language) {
 
     TestRunner.run(FooterPage.class, path, (FooterPage page) -> {
 
@@ -95,7 +122,7 @@ public class Footer_Test extends TestObjectBase {
    *          Path of the page to check.
    */
   @Test(dataProvider = "getPageFooterPaths")
-  public void isFooterRenderCorrect(String path) {
+  public void isFooterRenderCorrect(String path, String language) {
 
     TestRunner.run(FooterPage.class, path, (FooterPage page) -> {
 
@@ -111,99 +138,7 @@ public class Footer_Test extends TestObjectBase {
    *          Path of the page to check.
    */
   @Test(dataProvider = "getPageFooterPaths")
-  public void verifyFooterExistOnce(String path) {
-
-    TestRunner.run(FooterPage.class, path, (FooterPage page) -> {
-
-      Assert.assertTrue(page.isFooterVisibleOnce(), "Footer is visible once.");
-
-    });
-  }
-
-  /********* Espanol ***************************************************/
-
-  /**
-   * This method is checking if the Footer exists on the pages
-   *
-   * @param path
-   *          Path of the page to check.
-   */
-  @Test(dataProvider = "getPageFooterPathsEsp")
-  public void footerIsVisibleEsp(String path) {
-
-    TestRunner.run(FooterPage.class, path, (FooterPage page) -> {
-
-      Assert.assertTrue(page.isFooterVisible(), "Page Footer is visible.");
-
-    });
-
-  }
-
-  /**
-   * This method is checking if the header on the Footer exists and is correctly
-   * displayed on the pages
-   * 
-   * @param path
-   *          Path of the page to check.
-   */
-
-  @Test(dataProvider = "getPageFooterPathsEsp")
-  public void verifyFooterHeaderEsp(String path) {
-
-    TestRunner.run(FooterPage.class, path, (FooterPage page) -> {
-
-      Assert.assertTrue(page.isFooterHeaderVisible(), "Footer Header is visible.");
-      Assert.assertTrue(page.getFooterHeaderEsp(), "Spanish Footer Header is displayed correct.");
-
-    });
-
-  }
-
-  /**
-   * This method is checking if the length of text displayed on footer on the
-   * Spanish pages is in considerable range
-   * 
-   * @param path
-   *          Path of the page to check.
-   */
-  @Test(dataProvider = "getPageFooterPathsEsp")
-  public void verifyFooterTextlengthCorrectEsp(String path) {
-
-    TestRunner.run(FooterPage.class, path, (FooterPage page) -> {
-
-      Assert.assertTrue(page.footerText().length() > 400 && page.footerText().length() < 800,
-          "footer text is in range of 400 to 800 chrs");
-    });
-
-  }
-
-  /**
-   * This method is checking if Back to Top icon is displayed on the footer on
-   * all pages and have correct link and label
-   * 
-   * @param path
-   *          Path of the page to check.
-   */
-  @Test(dataProvider = "getPageFooterPathsEsp")
-  public void verifyBackToTopEsp(String path) {
-
-    TestRunner.run(FooterPage.class, path, (FooterPage page) -> {
-
-      Assert.assertTrue(page.isbackToTopVisible(), "Back to top link is visible.");
-      Assert.assertTrue(page.getbackToTopEsp(), "Back to top icon is displayed correct.");
-
-    });
-  }
-
-  /**
-   * This method is checking if footer is displayed only once on all Spanish
-   * pages
-   * 
-   * @param path
-   *          Path of the page to check.
-   */
-  @Test(dataProvider = "getPageFooterPathsEsp")
-  public void verifyFooterExistOnceEsp(String path) {
+  public void verifyFooterExistOnce(String path, String language) {
 
     TestRunner.run(FooterPage.class, path, (FooterPage page) -> {
 
@@ -225,22 +160,8 @@ public class Footer_Test extends TestObjectBase {
    */
   @DataProvider(name = "getPageFooterPaths")
   public Iterator<Object[]> getPageFooterPaths() {
-    String[] columns = { "path" };
+    String[] columns = { "path", "language" };
     return new ExcelDataReader(getDataFilePath("footer-data.xlsx"), "pages_with_footer", columns);
-
-  }
-
-  /**
-   * Retrieves a list of paths to pages in Spanish which are expected to have
-   * Footer
-   * 
-   * @return An iterable list of single element arrays, each containing a single
-   *         path.
-   */
-  @DataProvider(name = "getPageFooterPathsEsp")
-  public Iterator<Object[]> getPageFooterPathsEsp() {
-    String[] columns = { "path" };
-    return new ExcelDataReader(getDataFilePath("footer-data.xlsx"), "pages_with_footer_spanish", columns);
 
   }
 
