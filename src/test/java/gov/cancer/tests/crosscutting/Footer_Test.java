@@ -145,11 +145,10 @@ public class Footer_Test extends TestObjectBase {
    *******************************************/
 
   /**
-   * Retrieves a list of paths to pages in English which are expected to have
-   * Footer
+   * Retrieves a list of paths to pages which are expected to have Footer
    * 
-   * @return An iterable list of single element arrays, each containing a single
-   *         path.
+   * @return An iterable list of two element arrays, each containing a path and
+   *         language.
    */
   @DataProvider(name = "getPageFooterPaths")
   public Iterator<Object[]> getPageFooterPaths() {
