@@ -11,7 +11,7 @@ public class LanguageToggle extends PageObjectBase {
 
   /********* FOOTER SELECTORS ***********************/
 
-  final public String languagetoggle = "#LangList1";
+  final public String languagetoggle = ".language-bar .links";
 
   @FindBy(how = How.CSS, using = ".language-bar")
   WebElement languagebar;
@@ -29,12 +29,18 @@ public class LanguageToggle extends PageObjectBase {
 
   /* Returns true if language toggle is displayed on the page */
   public boolean isToggleVisible() {
-    return ElementHelper.findElement(getBrowser(), languagetoggle).isDisplayed();
+    if (ElementHelper.findElement(languagebar, languagetoggle) != null)
+      return ElementHelper.findElement(languagebar, languagetoggle).isDisplayed();
+    else
+      return false;
   }
 
   /* Returns label of the language toggle */
   public String getTogglelabel() {
-    return ElementHelper.findElement(languagebar, languagetoggle).getText();
+    if (ElementHelper.findElement(languagebar, languagetoggle) != null)
+      return ElementHelper.findElement(languagebar, languagetoggle).getText();
+    else
+      return null;
   }
 
 }

@@ -27,7 +27,7 @@ public class LanguageToggle_Test extends TestObjectBase {
    *          translated path of the page.
    */
   @Test(dataProvider = "getLanguageToggle")
-  public void isToggleVisible(String path, String language, String translation) {
+  public void isToggleVisible(String path, String language, String translation, String expectedtoggle) {
 
     TestRunner.run(LanguageToggle.class, path, (LanguageToggle page) -> {
 
@@ -49,17 +49,12 @@ public class LanguageToggle_Test extends TestObjectBase {
    */
 
   @Test(dataProvider = "getLanguageToggle")
-  public void isToggleLabelCorrect(String path, String language, String translation) {
+  public void isToggleLabelCorrect(String path, String language, String translation, String expectedtoggle) {
 
     TestRunner.run(LanguageToggle.class, path, (LanguageToggle page) -> {
-      String expected_label;
-      if (language == "English" && translation != null) {
-        expected_label = "Espanol";
-        Assert.assertEquals(page.getTogglelabel(), expected_label, "Toggle label is correct.");
-      } else if (language == "Espanol" && translation != null) {
-        expected_label = "English";
-        Assert.assertEquals(page.getTogglelabel(), expected_label, "Toggle label is correct.");
-      }
+
+      Assert.assertEquals(page.getTogglelabel(), expectedtoggle, "Toggle label is correct.");
+
     });
   }
 
@@ -73,11 +68,11 @@ public class LanguageToggle_Test extends TestObjectBase {
    * @param translation
    *          translated path of the page.
    */
-  @Test(dataProvider = "getLanguageToggleNoTranslation")
-  public void isToggleNotVisible(String path, String language, String translation) {
+  // @Test(dataProvider = "getLanguageToggleNoTranslation")
+  public void isToggleNotVisible(String path, String language, String translation, String expectedtoggle) {
 
     TestRunner.run(LanguageToggle.class, path, (LanguageToggle page) -> {
-      Assert.assertTrue(page.isToggleVisible() && page.getTogglelabel().isEmpty(), "Toggle is not displayed.");
+      Assert.assertFalse(page.isToggleVisible(), "Toggle is not displayed.");
 
     });
   }
@@ -93,7 +88,7 @@ public class LanguageToggle_Test extends TestObjectBase {
    */
   @DataProvider(name = "getLanguageToggle")
   public Iterator<Object[]> getLanguageToggle() {
-    String[] columns = { "path", "language", "translation" };
+    String[] columns = { "path", "language", "translation", "expectedtoggle" };
     return new ExcelDataReader(getDataFilePath("languagetoggle-data.xlsx"), "pages_with_translation", columns);
   }
 
