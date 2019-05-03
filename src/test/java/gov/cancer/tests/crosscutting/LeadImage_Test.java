@@ -25,7 +25,7 @@ public class LeadImage_Test extends TestObjectBase {
    * @param language
    *          Language of the page to check.
    */
-   //@Test(dataProvider = "getPageWithLeadImage")
+   @Test(dataProvider = "getPageWithLeadImage")
   public void isLeadImageVisible(String path, String caption, String credit, String alt) {
 
     TestRunner.run(LeadImage.class, path, (LeadImage page) -> {
@@ -48,7 +48,7 @@ public class LeadImage_Test extends TestObjectBase {
    }
 
 
-  // @Test(dataProvider = "getPageWithLeadImage_Caption")
+   @Test(dataProvider = "getPageWithLeadImage_Caption")
   public void verifyImageCaption(String path, String caption) {
 
     TestRunner.run(LeadImage.class, path, (LeadImage page) -> {
@@ -59,7 +59,7 @@ public class LeadImage_Test extends TestObjectBase {
 
   }
 
- //@Test(dataProvider = "getPageWithLeadImage_Credit")
+ @Test(dataProvider = "getPageWithLeadImage_Credit")
   public void verifyImageCredit(String path, String credit) {
 
     TestRunner.run(LeadImage.class, path, (LeadImage page) -> {
@@ -70,7 +70,7 @@ public class LeadImage_Test extends TestObjectBase {
 
   }
 
-  //@Test(dataProvider = "getPageWithLeadImage_Alt")
+  @Test(dataProvider = "getPageWithLeadImage_Alt")
   public void verifyImageAltText(String path, String alt) {
 
     TestRunner.run(LeadImage.class, path, (LeadImage page) -> {
