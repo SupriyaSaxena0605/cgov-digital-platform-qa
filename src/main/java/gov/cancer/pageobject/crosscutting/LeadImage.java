@@ -16,7 +16,7 @@ public class LeadImage extends PageObjectBase {
   @FindBy(how = How.CSS, using = "#cgvBody")
   WebElement pageBody;
 
-  /********* FOOTER SELECTORS ***********************/
+  /********* LEAD IMAGE SELECTORS ***********************/
 
   final public String imagecontainer = "div#cgvBody > div > figure";
   final public String imagecaption = "div.caption-container p";
@@ -55,5 +55,5 @@ public class LeadImage extends PageObjectBase {
     WebElement ImageDiv = ElementHelper.findElement(getBrowser(), imagediv);
     return ImageDiv.getAttribute("alt");
   }
-  
+
 }
