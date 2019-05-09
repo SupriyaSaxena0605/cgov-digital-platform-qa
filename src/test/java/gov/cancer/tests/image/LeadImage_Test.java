@@ -7,7 +7,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import gov.cancer.framework.ExcelDataReader;
-import gov.cancer.pageobject.crosscutting.FooterPage;
 import gov.cancer.pageobject.image.LeadImage;
 import gov.cancer.tests.TestObjectBase;
 import gov.cancer.tests.TestRunner;
@@ -22,15 +21,9 @@ public class LeadImage_Test extends TestObjectBase {
    * 
    * @param path
    *          Path of the page to check.
-   * @param caption
-   *          Caption of Image.
-   * @param credit
-   *          Credit of Image.
-   * @param alt
-   *          Alternative text of Image.
    */
   @Test(dataProvider = "getPageWithLeadImage")
-  public void isLeadImageVisible(String path, String caption, String credit, String alt) {
+  public void isLeadImageVisible(String path) {
 
     TestRunner.run(LeadImage.class, path, (LeadImage page) -> {
 
@@ -127,7 +120,7 @@ public class LeadImage_Test extends TestObjectBase {
    */
   @DataProvider(name = "getPageWithLeadImage")
   public Iterator<Object[]> getPageWithLeadImage() {
-    String[] columns = { "path", "Caption", "Credit", "Alt text" };
+    String[] columns = { "path" };
     return new ExcelDataReader(getDataFilePath("leadimage-data.xlsx"), "pages_with_leadimage", columns);
 
   }

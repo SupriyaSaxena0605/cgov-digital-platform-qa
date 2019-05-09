@@ -1,20 +1,10 @@
 package gov.cancer.pageobject.image;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
-
 import gov.cancer.framework.ElementHelper;
 import gov.cancer.pageobject.PageObjectBase;
 
 public class LeadImage extends PageObjectBase {
-
-  @FindBy(how = How.CSS, using = "#cgvBody")
-  WebElement pageBody;
 
   /********* LEAD IMAGE SELECTORS ***********************/
 
