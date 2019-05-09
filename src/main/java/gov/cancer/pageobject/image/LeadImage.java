@@ -1,4 +1,4 @@
-package gov.cancer.pageobject.crosscutting;
+package gov.cancer.pageobject.image;
 
 import java.util.List;
 
@@ -41,13 +41,12 @@ public class LeadImage extends PageObjectBase {
 
   /* Returns the caption of the image */
   public String getCaption() {
-    return ElementHelper.findElement(getBrowser(), imagecaption).getText();
+    return ElementHelper.getText(getBrowser(), imagecaption);
   }
 
   /* Returns the credit of the image */
   public String getCredit() {
-
-    return ElementHelper.findElement(getBrowser(), imagecredit).getText();
+    return ElementHelper.getText(getBrowser(), imagecredit);
   }
 
   /* Returns the alt text of the image */

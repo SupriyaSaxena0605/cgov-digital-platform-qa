@@ -1,4 +1,4 @@
-package gov.cancer.tests.crosscutting;
+package gov.cancer.tests.image;
 
 import java.util.Iterator;
 
@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 import gov.cancer.framework.ExcelDataReader;
 import gov.cancer.pageobject.crosscutting.FooterPage;
-import gov.cancer.pageobject.crosscutting.LeadImage;
+import gov.cancer.pageobject.image.LeadImage;
 import gov.cancer.tests.TestObjectBase;
 import gov.cancer.tests.TestRunner;
 
@@ -110,7 +110,6 @@ public class LeadImage_Test extends TestObjectBase {
 
     TestRunner.run(LeadImage.class, path, (LeadImage page) -> {
       Assert.assertTrue(page.getAltText().equals(alt), "Lead Image alt is correct");
-      ;
 
     });
 
