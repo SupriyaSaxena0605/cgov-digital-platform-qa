@@ -24,7 +24,7 @@ public class PromoImage_Test extends TestObjectBase {
 
     TestRunner.run(PromoImage.class, path, (PromoImage page) -> {
 
-      Assert.assertTrue(page.isPromoImageVisible(), "Promo Image is visible.");
+      Assert.assertTrue(page.isPromoImageVisibleCard(), "Promo Image is visible.");
 
     });
 
@@ -57,11 +57,11 @@ public class PromoImage_Test extends TestObjectBase {
    * @param alt
    *          Alternative text of Image..
    */
-  @Test(dataProvider = "getPageWithPromoImage")
+  //@Test(dataProvider = "getPageWithPromoImage")
   public void verifyPromoImageAltText(String path, String srcPromo, String altPromo) {
 
     TestRunner.run(PromoImage.class, path, (PromoImage page) -> {
-      Assert.assertTrue(page.getAltText().equals(altPromo), "Lead Image alt is correct");
+      //Assert.assertTrue(page.getAltText().equals(altPromo), "Lead Image alt is correct");
 
     });
 
@@ -98,42 +98,102 @@ public class PromoImage_Test extends TestObjectBase {
   public void verifyPromoLeadImageAltText(String path, String srcLead, String altLead) {
 
     TestRunner.run(PromoImage.class, path, (PromoImage page) -> {
-      Assert.assertTrue(page.getAltText().equals(altLead), "Lead Image alt is correct");
+   //   Assert.assertTrue(page.getAltText().equals(altLead), "Lead Image alt is correct");
+
+    });
+
+  }
+  
+  /**
+   * This method is checking if the correct alt text is displayed with Lead
+   * Image
+   * 
+   * @param path
+   *          Path of the page to check.
+   * @param alt
+   *          Alternative text of Image..
+   */
+ // @Test(dataProvider = "getPageWithoutPromoImage")
+  public void verifyPromoImagenotVisible(String path, String Promoalt) {
+
+    TestRunner.run(PromoImage.class, path, (PromoImage page) -> {
+
+      Assert.assertEquals(page.isPromoImageVisibleCard(), Promoalt);
 
     });
 
   }
 
 
-  /*******************************************
-   * DATA PROVIDER
-   *******************************************/
 
-  /**
-   * Retrieves a list of paths to pages which are expected to have Lead Image
-   * 
-   * @return An iterable list of 4 element arrays, each containing a path,
-   *         caption, credit, and alt text.
-   */
-  @DataProvider(name = "getPageWithPromoImage")
-  public Iterator<Object[]> getPageWithPromoImage() {
-    String[] columns = { "path", "Promo Image Src", "Promo Alt text" };
-    return new ExcelDataReader(getDataFilePath("promoimage-data.xlsx"), "pages_with_promoimage", columns);
+/*******************************************
+ * DATA PROVIDER
+ *******************************************/
 
-  }
+/**
+ * Retrieves a list of paths to pages which are expected to have Lead Image
+ * 
+ * @return An iterable list of 4 element arrays, each containing a path,
+ *         caption, credit, and alt text.
+ */
+@DataProvider(name = "getPageWithPromoImage")
+public Iterator<Object[]> getPageWithPromoImage() {
+  String[] columns = { "path", "Promo Image Src", "Promo Alt text" };
+  return new ExcelDataReader(getDataFilePath("promoimage-data.xlsx"), "pages_with_promo+leadimage", columns);
 
-  /**
-   * Retrieves a list of paths to pages which are expected to have Lead Image
-   * with Caption
-   * 
-   * @return An iterable list of two element arrays, each containing a path and
-   *         caption.
-   */
-  @DataProvider(name = "getPageWithnoPromobutLeadImage")
-  public Iterator<Object[]> getPageWithnoPromobutLeadImage() {
-    String[] columns = { "path","Lead Image Src", "Lead Alt text" };
-    return new ExcelDataReader(getDataFilePath("promoimage-data.xlsx"), "pages_with_lead_nopromoimage", columns);
+}
 
-  }
+/**
+ * Retrieves a list of paths to pages which are expected to have Lead Image
+ * 
+ * @return An iterable list of 4 element arrays, each containing a path,
+ *         caption, credit, and alt text.
+ */
+@DataProvider(name = "getPageListWithPromoImage")
+public Iterator<Object[]> getPageListWithPromoImage() {
+  String[] columns = { "path", "Promo Image Src", "Promo Alt text" };
+  return new ExcelDataReader(getDataFilePath("promoimage-data.xlsx"), "List_with_promo+leadimage", columns);
 
-  }
+}
+/**
+ * Retrieves a list of paths to pages which are expected to have Lead Image
+ * with Caption
+ * 
+ * @return An iterable list of two element arrays, each containing a path and
+ *         caption.
+ */
+@DataProvider(name = "getPageWithnoPromobutLeadImage")
+public Iterator<Object[]> getPageWithnoPromobutLeadImage() {
+  String[] columns = { "path","Lead Image Src", "Lead Alt text" };
+  return new ExcelDataReader(getDataFilePath("promoimage-data.xlsx"), "pages_with_lead_nopromoimage", columns);
+
+}
+
+/**
+ * Retrieves a list of paths to pages which are expected to have Lead Image
+ * with Caption
+ * 
+ * @return An iterable list of two element arrays, each containing a path and
+ *         caption.
+ */
+@DataProvider(name = "getPageWithnoPromobutLeadImage")
+public Iterator<Object[]> getPageListWithnoPromobutLeadImage() {
+  String[] columns = { "path","Lead Image Src", "Lead Alt text" };
+  return new ExcelDataReader(getDataFilePath("promoimage-data.xlsx"), "List_with_lead_nopromoimage", columns);
+
+}
+/**
+ * Retrieves a list of paths to pages which are expected to have Lead Image
+ * with Caption
+ * 
+ * @return An iterable list of two element arrays, each containing a path and
+ *         caption.
+ */
+@DataProvider(name = "getPageWithoutPromoImage")
+public Iterator<Object[]> getPageWithoutPromoImage() {
+  String[] columns = { "path" };
+  return new ExcelDataReader(getDataFilePath("promoimage-data.xlsx"), "page_with_nopromoimage", columns);
+
+}
+}
+
