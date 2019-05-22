@@ -40,4 +40,12 @@ public class Link {
 
     return theUrl;
   }
+  
+  /**
+   * Retrieves the text of the link html element
+   * @return
+   */
+  public String getText(){
+    return element.getText();
+  }
 }

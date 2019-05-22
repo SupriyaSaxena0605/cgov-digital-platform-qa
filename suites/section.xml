@@ -10,6 +10,9 @@
      <test name="RecommendedContent Tests." preserve-order="true">
     <classes>
       <class name="gov.cancer.tests.section.RecommendedContent_Test" />
+  <test name="On This Page tests" preserve-order="true">
+    <classes>
+      <class name="gov.cancer.tests.section.OnThisPage_Test" />
     </classes>
   </test>
 
