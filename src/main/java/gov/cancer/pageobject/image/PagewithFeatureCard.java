@@ -3,35 +3,28 @@ package gov.cancer.pageobject.image;
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 import gov.cancer.framework.ElementHelper;
-
+import gov.cancer.pageobject.PageObjectBase;
 import gov.cancer.pageobject.section.FeatureCard;
 
-public class PagewithFeatureCard {
-  @FindBy(how = How.CSS, using = "#page")
-  WebElement pageBody;
+public class PagewithFeatureCard extends PageObjectBase {
 
-  WebElement element;
 
-  WebElement image;
-
-  final public String featurecard = "[class='large-6 columns topic-feature card gutter '].feature-card";
+  private final String FEATURE_CARD_SELECTOR = ".feature-primary .feature-card";
 
   public PagewithFeatureCard(String path) {
-    super();
+    super(path);
   }
 
-  public List<FeatureCard> getFeatureCard() {
+  public List<FeatureCard> getFeatureCards() {
 
-    List<FeatureCard> card = new ArrayList<FeatureCard>();
+    List<FeatureCard> cardlist = new ArrayList<FeatureCard>();
 
-    List<WebElement> cardelement = ElementHelper.findElements(pageBody, featurecard);
+    List<WebElement> cardelement = ElementHelper.findElements(getBrowser(), FEATURE_CARD_SELECTOR);
     for (WebElement we : cardelement) {
-      card.add(new FeatureCard(we));
+      cardlist.add(new FeatureCard(we));
     }
-    return card;
+    return cardlist;
 
   }
 

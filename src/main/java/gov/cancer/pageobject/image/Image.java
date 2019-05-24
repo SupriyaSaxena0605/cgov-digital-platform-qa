@@ -1,53 +1,55 @@
 package gov.cancer.pageobject.image;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import org.apache.commons.lang3.NotImplementedException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 
-import gov.cancer.pageobject.PageObjectBase;
+public class Image {
 
-public class Image extends PageObjectBase {
-
-  @FindBy(how = How.CSS, using = "#page")
-  WebElement pageBody;
-
-  /********* Image SELECTORS ***********************/
-
-  final public String image = "div[class='image-hover'] img";
-
-  WebElement figure;
+  // The element containg the image.
+  WebElement element;
 
   /**
    * Constructor
    *
-   * @param path
-   *          server-relative path of the page to load.
+   * @param element WebElement containing the markup for the image.
    */
-  public Image(String path) {
-    super(path);
+  public Image(WebElement element) {
+    this.element = element;
 
   }
 
-  /* Returns the source url of the image */
-  public URL getSrcUrl() {
-    throw new NotImplementedException("TODO:implement getSrcUrl method");
+  /**
+   * Returns the image src attribute as a URL object.
+   *
+   * @return A URL instance containing the parsed link from the elements href
+   *         attribute, or NULL if the href was missing, empty, or malformed.
+   */
+  public URL getUrl() {
+    URL theUrl = null;
+
+    String href = element.getAttribute("src");
+    if (href != null && !href.trim().isEmpty()) {
+      try {
+        theUrl = new URL(href);
+      } catch (MalformedURLException e) {
+        theUrl = null;
+      }
+    }
+
+    return theUrl;
   }
 
-  /* Returns the caption of the image */
-  public String getCaption() {
-    throw new NotImplementedException("TODO:implement getCaption method");
-  }
 
-  /* Returns the caption of the image */
-  public String getCredit() {
-    throw new NotImplementedException("TODO:implement getCredit method");
-  }
-
-  /* Returns the alt text of the image */
+  /**
+   * Retrieves the content of the image's <b>alt</b> attribute.
+   *
+   * @return String containing the images alt text, or NULL if the attribute is
+   *         not present.
+   */
   public String getAltText() {
-    throw new NotImplementedException("TODO:implement getAltText method");
+    return element.getAttribute("alt");
   }
 
 }

@@ -1,21 +1,53 @@
 package gov.cancer.tests.image;
 
+import java.net.URL;
 import java.util.Iterator;
+import java.util.List;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import gov.cancer.framework.ExcelDataReader;
+import gov.cancer.pageobject.image.Image;
 import gov.cancer.pageobject.image.PagewithFeatureCard;
+import gov.cancer.pageobject.section.FeatureCard;
+
 import gov.cancer.tests.TestObjectBase;
 import gov.cancer.tests.TestRunner;
 
 public class PromoImage_Test extends TestObjectBase {
 
+
+  public static void main(String[] args) {
+
+    TestRunner.run(PagewithFeatureCard.class, "/about-nci/organization/ccct", (PagewithFeatureCard page) -> {
+
+      // Retrieves a list with two cards.
+      List<FeatureCard> cardList = page.getFeatureCards();
+
+
+      // The card's link cannot be retrieved at this time
+      // due to NCIOCPL/cgov-digital-platform issue #1820
+      FeatureCard card = cardList.get(0);
+
+      String title = card.getTitle();
+      String description = card.getDescription();
+
+      Image image = card.getImage();
+      String alt = image.getAltText();
+      URL src = image.getUrl();
+
+    });
+
+  }
+
+
+
+
   /**
    * This method is checking if the Lead Image exists on the pages
-   * 
+   *
    * @param path
    *          Path of the page to check.
    */
@@ -36,7 +68,7 @@ public class PromoImage_Test extends TestObjectBase {
   /**
    * This method is checking if the Lead Image does not exist on the pages with
    * no lead image
-   * 
+   *
    * @param path
    *          Path of the page to check.
    */
@@ -44,100 +76,100 @@ public class PromoImage_Test extends TestObjectBase {
   /*
    * public void verifyPromoImageSource(String path, String srcPromo, String
    * altPromo) {
-   * 
+   *
    * TestRunner.run(PromoImage.class, path, (PromoImage page) -> {
-   * 
+   *
    * Assert.assertTrue(page.isPromoImageSrcCorrect(srcPromo),
    * "Promo Image is correctly displayed.");
-   * 
+   *
    * });
-   * 
+   *
    * }
-   * 
+   *
    * /** This method is checking if the correct alt text is displayed with Lead
    * Image
-   * 
+   *
    * @param path Path of the page to check.
-   * 
+   *
    * @param alt Alternative text of Image..
    */
   // @Test(dataProvider = "getPageWithPromoImage")
   /*
    * public void verifyPromoImageAltText(String path, String srcPromo, String
    * altPromo) {
-   * 
+   *
    * TestRunner.run(PromoImage.class, path, (PromoImage page) -> { //
    * Assert.assertTrue(page.getAltText().equals(altPromo), "Lead Image alt // is
    * correct");
-   * 
+   *
    * });
-   * 
+   *
    * }
-   * 
+   *
    * /** This method is checking if the Lead Image does not exist on the pages
    * with no lead image
-   * 
+   *
    * @param path Path of the page to check.
    */
   // @Test(dataProvider = "getPageWithnoPromobutLeadImage")
   /*
    * public void verifyPromoLeadImageSource(String path, String srcLead, String
    * altLead) {
-   * 
+   *
    * TestRunner.run(PromoImage.class, path, (PromoImage page) -> {
-   * 
+   *
    * // Assert.assertTrue(page.isPromoImageSrcCorrect(srcLead), "Promo Image is
    * // correctly displayed.");
-   * 
+   *
    * });
-   * 
+   *
    * }
-   * 
+   *
    * /** This method is checking if the correct alt text is displayed with Lead
    * Image
-   * 
+   *
    * @param path Path of the page to check.
-   * 
+   *
    * @param alt Alternative text of Image..
    */
   // @Test(dataProvider = "getPageWithnoPromobutLeadImage")
   /*
    * public void verifyPromoLeadImageAltText(String path, String srcLead, String
    * altLead) {
-   * 
+   *
    * TestRunner.run(PromoImage.class, path, (PromoImage page) -> { //
    * Assert.assertTrue(page.getAltText().equals(altLead), "Lead Image alt is //
    * correct");
-   * 
+   *
    * });
-   * 
+   *
    * }
-   * 
+   *
    * /** This method is checking if the correct alt text is displayed with Lead
    * Image
-   * 
+   *
    * @param path Path of the page to check.
-   * 
+   *
    * @param alt Alternative text of Image..
    */
   // @Test(dataProvider = "getPageWithoutPromoImage")
   /*
    * public void verifyPromoImagenotVisible(String path, String Promoalt) {
-   * 
+   *
    * TestRunner.run(PromoImage.class, path, (PromoImage page) -> {
-   * 
+   *
    * // Assert.assertEquals(page.isPromoImageVisibleCard(), Promoalt);
-   * 
+   *
    * });
-   * 
+   *
    * }
-   * 
+   *
    * /******************************************* DATA PROVIDER
    *******************************************/
 
   /**
    * Retrieves a list of paths to pages which are expected to have Lead Image
-   * 
+   *
    * @return An iterable list of 4 element arrays, each containing a path,
    *         caption, credit, and alt text.
    */
@@ -150,7 +182,7 @@ public class PromoImage_Test extends TestObjectBase {
 
   /**
    * Retrieves a list of paths to pages which are expected to have Lead Image
-   * 
+   *
    * @return An iterable list of 4 element arrays, each containing a path,
    *         caption, credit, and alt text.
    */
@@ -164,7 +196,7 @@ public class PromoImage_Test extends TestObjectBase {
   /**
    * Retrieves a list of paths to pages which are expected to have Lead Image
    * with Caption
-   * 
+   *
    * @return An iterable list of two element arrays, each containing a path and
    *         caption.
    */
@@ -178,7 +210,7 @@ public class PromoImage_Test extends TestObjectBase {
   /**
    * Retrieves a list of paths to pages which are expected to have Lead Image
    * with Caption
-   * 
+   *
    * @return An iterable list of two element arrays, each containing a path and
    *         caption.
    */
@@ -192,7 +224,7 @@ public class PromoImage_Test extends TestObjectBase {
   /**
    * Retrieves a list of paths to pages which are expected to have Lead Image
    * with Caption
-   * 
+   *
    * @return An iterable list of two element arrays, each containing a path and
    *         caption.
    */
