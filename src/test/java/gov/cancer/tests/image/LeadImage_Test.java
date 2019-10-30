@@ -64,7 +64,7 @@ public class LeadImage_Test extends TestObjectBase {
 
     TestRunner.run(LeadImage.class, path, (LeadImage page) -> {
 
-      Assert.assertTrue(page.getCaption().equals(caption), "Lead Image caption is correct");
+      Assert.assertTrue(page.getCaption().contains(caption), "Lead Image caption is correct");
 
     });
 

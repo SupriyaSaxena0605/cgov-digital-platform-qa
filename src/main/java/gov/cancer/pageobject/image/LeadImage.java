@@ -9,7 +9,7 @@ public class LeadImage extends PageObjectBase {
   /********* LEAD IMAGE SELECTORS ***********************/
 
   final public String imagecontainer = "div#cgvBody > div > figure";
-  final public String imagecaption = "div.caption-container p";
+  final public String imagecaption = "div.caption-container";
   final public String imagecredit = ".image-photo-credit";
   final public String imagediv = "div[class='centered-element'] img";
 
