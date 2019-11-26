@@ -47,6 +47,21 @@ public class CTS_Section extends PageObjectBase {
     }
 
   }
+   
+   /**
+    * Retrieve header element
+    * @return  String header text of page
+    */
+    public String getHeader(String path){
+     try {
+       getWait().until(ExpectedConditions.visibilityOf(header));
+       return header.getText();
+     }catch (NoSuchElementException e){
+       return "Header not present";
+     }
+
+   }
+
 
 }
 
