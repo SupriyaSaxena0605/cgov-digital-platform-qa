@@ -17,11 +17,13 @@ import java.util.List;
  */
 public class CountryStateCitySubSection extends Component {
 
+
+  private WebElement countryField;
   //country dropdown list
   private Select countryDropdown;
   // State field - only visible for United States selected in country list
   private AutoSuggestField state;
-  // city text field - always available in the subsection
+   // city text field - always available in the subsection
   private TextField city;
 
   /**
@@ -31,7 +33,8 @@ public class CountryStateCitySubSection extends Component {
    */
   public CountryStateCitySubSection(WebDriver driver, WebElement element) {
     super(element);
-    countryDropdown = new Select(ElementHelper.findElement(element, "select#country"));
+    countryField = ElementHelper.findElement(element, "select#country");
+    countryDropdown = new Select(countryField);
     city = new TextField(ElementHelper.findElement(element, "input#city"));
     state = new AutoSuggestField(driver, ElementHelper.findElement(element, ":scope input#lst"));
   }
@@ -52,6 +55,13 @@ public class CountryStateCitySubSection extends Component {
    */
   public TextField getCity() {
     return city;
+  }
+
+  /**
+   * Method checks if Country dropdown field is displayed
+   */
+  public boolean isCountryDropdownVisible() {
+    return countryField.isDisplayed();
   }
 
   /**

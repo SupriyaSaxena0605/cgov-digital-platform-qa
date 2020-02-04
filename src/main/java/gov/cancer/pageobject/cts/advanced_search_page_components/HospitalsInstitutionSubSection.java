@@ -1,8 +1,8 @@
 package gov.cancer.pageobject.cts.advanced_search_page_components;
 
 import gov.cancer.framework.ElementHelper;
-import gov.cancer.pageobject.components.AutoSuggestField;
 import gov.cancer.pageobject.components.Component;
+import gov.cancer.pageobject.cts.components.AutoSuggest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -13,9 +13,11 @@ import org.openqa.selenium.WebElement;
 public class HospitalsInstitutionSubSection extends Component {
 
   //AutoSuggest field for hospital/institutions
-  private AutoSuggestField hospitalInput;
+  private AutoSuggest hospitalInput;
   //main element
   private WebElement element;
+  //WebDriver is used for AutoSuggest initialization that is outside of constructor
+  private WebDriver driver;
 
   /**
    * Constructor
@@ -25,24 +27,19 @@ public class HospitalsInstitutionSubSection extends Component {
   public HospitalsInstitutionSubSection(WebDriver driver, WebElement element) {
     super(element);
     this.element = element;
-    hospitalInput = new AutoSuggestField(driver, ElementHelper.findElement(element, ":scope input[role='combobox']"));
+    this.driver=driver;
+
   }
 
   /**
    * Getter method for hospital input field
+   * Initialized this autosuggest field outside the constructor as it is not displayed on page load.
+   * It is only displayed when Hospitals Radio button is clicked
    *
    * @return
    */
-  public AutoSuggestField getHospitalInput() {
+  public AutoSuggest getHospitalInput() {
+    hospitalInput = new AutoSuggest(driver, ElementHelper.findElement(element, "div.cts-autocomplete"));
     return hospitalInput;
-  }
-
-  /**
-   * Method retrieves PlaceHolder text from the input field
-   *
-   * @return
-   */
-  public String getPlaceHolderText() {
-    return element.getText();
   }
 }

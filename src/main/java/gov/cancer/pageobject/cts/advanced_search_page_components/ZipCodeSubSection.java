@@ -3,6 +3,7 @@ package gov.cancer.pageobject.cts.advanced_search_page_components;
 import gov.cancer.framework.ElementHelper;
 import gov.cancer.pageobject.components.Component;
 import gov.cancer.pageobject.components.TextField;
+import gov.cancer.pageobject.cts.components.ErrorDisplay;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class represents sub section of Location section of Advanced Search Page
+ * This class represents ZipCode sub section of Location section of Advanced Search Page
  * Only becomes available once ZipCode radio button had been selected
  */
 public class ZipCodeSubSection extends Component {
@@ -43,9 +44,15 @@ public class ZipCodeSubSection extends Component {
   }
 
   /**
+   * Method checks if Radius dropdown field is displayed
+   */
+  public boolean isRadiusDropdownVisible() {
+    return ElementHelper.findElement(scope, "select#zipRadius").isDisplayed();
+  }
+
+  /**
    * Method returns all options from Radius dropdown
    */
-
   public List<String> getRadiusOptions() {
     List<WebElement> radiusOptions = radius.getOptions();
     List<String> radiusText = new ArrayList<String>();
@@ -56,7 +63,7 @@ public class ZipCodeSubSection extends Component {
   }
 
   /**
-   * Method return selected radious
+   * Method return selected radius
    * NOTE : only one option can be selected at a time
    *
    * @return text of selected optiom
@@ -75,5 +82,12 @@ public class ZipCodeSubSection extends Component {
    */
   public void selectRadius(String value) {
     radius.selectByValue(value);
+  }
+
+  /**
+   * Method retrieves Error Message from ZipCode section
+   */
+  public ErrorDisplay getErrorDisplay() {
+    return new ErrorDisplay(scope);
   }
 }

@@ -1,13 +1,14 @@
 package gov.cancer.pageobject.cts.advanced_search_page_components;
 
+import gov.cancer.framework.ElementChange;
 import gov.cancer.framework.ElementHelper;
+import gov.cancer.framework.ScrollUtil;
 import gov.cancer.pageobject.components.Component;
 import gov.cancer.pageobject.components.RadioButton;
-import gov.cancer.pageobject.components.TextField;
 import gov.cancer.pageobject.helper.Link;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,18 +19,8 @@ import java.util.List;
  */
 public class LocationSection extends Component {
 
-  // toggle
-  private WebElement limitResultToggle;
-  // ZipCode radio Button
-  private RadioButton zipCodeRadioButton;
-  // Country, State, City radio button
-  private RadioButton countryStateCityRadioButton;
-  // Hospitals radio button
-  private RadioButton hospitalsRadioButton;
-  //at NIH radio button
-  private RadioButton atNIHRadioButton;
-  //Search All radio button
-  private RadioButton searchAllRadioButton;
+  // Veteran Affairs toggle
+  private WebElement limitResultsToggle;
   //section title
   private WebElement title;
   // help link
@@ -42,14 +33,10 @@ public class LocationSection extends Component {
 
 
   /************LOCATORS***************/
-  private final static String limitResultLocator = "div.cts-toggle label";
-  private final static String zipCodeRadioButtonLocator = "div:nth-of-type(2) > .cts-radio__label";
-  private final static String countryStateCityRadioButtonLocator = "div:nth-of-type(3) > .cts-radio__label";
-  private final static String hospitalsRadioButtonLocator = "div:nth-of-type(4) > .cts-radio__label";
-  private final static String atNIHRadioButtonLocator = "div:nth-of-type(5) > .cts-radio__label";
+  private final static String LIMIT_RESULT_LOCATOR = "div.cts-toggle label[for='search-location-toggle']";
   private final static String HELP_LINK_LOCATOR = ":scope legend a";
   private final static String TITLE_LOCATOR = ":scope legend span";
-  private final static String SEARCH_ALL_LOCATIONS_RADIO_BUTTON_LOCATOR = "div:nth-of-type(1) > .cts-radio__label";
+  private final static String RADIO_BUTTONS_LOCATOR = ":scope .group-locations >.cts-radio >label";
 
 
   /**
@@ -59,52 +46,33 @@ public class LocationSection extends Component {
     super(element);
     this.driver = driver;
     this.scope = element;
-    limitResultToggle = ElementHelper.findElement(element, limitResultLocator);
-    zipCodeRadioButton = new RadioButton(ElementHelper.findElement(element, zipCodeRadioButtonLocator));
-    countryStateCityRadioButton = new RadioButton(ElementHelper.findElement(element, countryStateCityRadioButtonLocator));
-    hospitalsRadioButton = new RadioButton(ElementHelper.findElement(element, hospitalsRadioButtonLocator));
-    atNIHRadioButton = new RadioButton(ElementHelper.findElement(element, atNIHRadioButtonLocator));
-    title = ElementHelper.findElement(element, TITLE_LOCATOR);
-    helpLink = new Link(ElementHelper.findElement(element, HELP_LINK_LOCATOR));
-    searchAllRadioButton = new RadioButton(ElementHelper.findElement(element, SEARCH_ALL_LOCATIONS_RADIO_BUTTON_LOCATOR));
+    limitResultsToggle = ElementHelper.findElement(scope, LIMIT_RESULT_LOCATOR);
+    title = ElementHelper.findElement(scope, TITLE_LOCATOR);
+    helpLink = new Link(ElementHelper.findElement(scope, HELP_LINK_LOCATOR));
 
+  }
+  /**
+   * Getter for all radioButton
+   */
+  public List<RadioButton> getAllRadioButtons() {
+    List<RadioButton> allRadioButtonsObject = new ArrayList<>();
+     List<WebElement> allRadioButtons = new ArrayList<>(ElementHelper.findElements(scope,RADIO_BUTTONS_LOCATOR));
+    for (int i=0;i<allRadioButtons.size();i++){
+      allRadioButtonsObject.add(new RadioButton(allRadioButtons.get(i)));
+    }
+     return allRadioButtonsObject;
   }
 
   /**
    * Getter for Zip Code radioButton
    */
-  public RadioButton getZipCodeRadioButton() {
-    return zipCodeRadioButton;
+  public RadioButton getRadioButton(int i) {
+    List <RadioButton> radioButtons = getAllRadioButtons();
+    return radioButtons.get(i);
   }
 
-  /**
-   * Getters for Country State City radioBitton
-   *
-   * @return
-   */
-  public RadioButton getCountryStateCityRadioButton() {
-    return countryStateCityRadioButton;
-  }
 
-  /**
-   * Getters for Hospitals radioBitton
-   *
-   * @return
-   */
-  public RadioButton getHospitalsRadioButton() {
-    return hospitalsRadioButton;
-  }
-
-  /**
-   * Getters for At NIH radioBitton
-   *
-   * @return
-   */
-  public RadioButton getAtNIHRadioButton() {
-    return atNIHRadioButton;
-  }
-
-  /**
+   /**
    * methods to click on limitResultToggle
    *
    * @param limit - switchToggle if 'Yes'(true) and it is not selected already, then method clicks on a toggle
@@ -112,10 +80,13 @@ public class LocationSection extends Component {
    */
 
   public void limitToVaOnly(boolean limit) {
-    if (limit && !limitResultToggle.isSelected()) {
-      limitResultToggle.click();
-    } else if (!limit && limitResultToggle.isSelected())
-      limitResultToggle.click();
+    if (limit && !(ElementHelper.findElement(limitResultsToggle, ":scope .pos").isDisplayed())) {
+      limitResultsToggle.click();
+      ElementChange.WaitForText(driver, limitResultsToggle, "Yes");
+    } else if (!limit && ElementHelper.findElement(limitResultsToggle, ":scope .pos").isDisplayed()) {
+      limitResultsToggle.click();
+      ElementChange.WaitForText(driver, limitResultsToggle, "No");
+    }
   }
 
   /**
@@ -134,16 +105,7 @@ public class LocationSection extends Component {
     return helpLink;
   }
 
-  /**
-   * Getter for Search All Location radio button
-   *
-   * @return
-   */
-  public RadioButton getSearchAllRadioButton() {
-    return searchAllRadioButton;
-  }
-
-  /**
+   /**
    * Getter for Country/State/City SubSection
    *
    * @return
@@ -161,12 +123,36 @@ public class LocationSection extends Component {
     return new ZipCodeSubSection(ElementHelper.findElement(scope, ":scope div[class='search-location__block search-location__zip']"));
   }
 
-  /**
-   * Getter for hospitals subsection
+    /**
+   * Getter for Hospitals subsection
    */
   public HospitalsInstitutionSubSection getHospitalsInstitutionSubSection() {
-    return new HospitalsInstitutionSubSection(driver, ElementHelper.findElement(scope, ":scope div.cts-autocomplete"));
+    return new HospitalsInstitutionSubSection(driver, ElementHelper.findElement(scope, ".search-location__block"));
   }
 
+  /**
+   *This method is scrolling until the Veteran Affairs toggle is visible
+   * It is necessary, because of the presence of 'sticky block (form action)' which receives the click
+   */
+  public void scrollUntilToggleVisible(){
+    ScrollUtil.scrollIntoview(driver, limitResultsToggle);
+    }
+
+  /**
+   * This method is using JavaScript to get the state of toggle (which behaves as an invisible checkbox)
+   */
+  public boolean getToggleState() {
+    JavascriptExecutor javaScript = (JavascriptExecutor)driver;
+    return Boolean.parseBoolean(javaScript.executeScript("return document.getElementById('search-location-toggle').checked").toString());
+  }
+
+  /**
+   * This method is using JavaScript to get the state of Search All Locations radio button input tag (which appears to be invisible )
+   */
+  public boolean isSelected(int index) {
+    JavascriptExecutor javaScript = (JavascriptExecutor)driver;
+    return Boolean.parseBoolean(javaScript.executeScript("return document.querySelectorAll('.group-locations >.cts-radio input')["+index+"].checked").toString());
+
+  }
 
 }
